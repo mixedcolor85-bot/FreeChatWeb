@@ -7,36 +7,31 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
+// 프론트엔드 정적 파일 제공
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 let clients = [];
 
 wss.on('connection', (ws) => {
   console.log('New client connected');
+  clients.push(ws);
 
   ws.on('message', (message) => {
-    // 받은 메시지를 그대로 브로드캐스트
-    let parsed;
+    let data;
     try {
-      parsed = JSON.parse(message);
-    } catch {
-      console.log("Invalid JSON:", message);
+      data = JSON.parse(message); // 클라이언트가 JSON.stringify로 보냈다고 가정
+    } catch (e) {
+      console.error('Invalid message format:', message);
       return;
     }
 
-    const broadcastData = JSON.stringify({
-      nickname: parsed.nickname || 'Anonymous',
-      message: parsed.message || ''
-    });
-
+    // 모든 클라이언트에게 브로드캐스트
     clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(broadcastData);
+        client.send(JSON.stringify(data));
       }
     });
   });
-
-  clients.push(ws);
 
   ws.on('close', () => {
     clients = clients.filter(client => client !== ws);

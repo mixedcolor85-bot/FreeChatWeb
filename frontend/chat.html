@@ -3,15 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Freechat</title>
+  <title>FreeChat</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="chat-container">
-    <div id="messages" class="messages"></div>
-    <div class="input-container">
-      <input type="text" id="messageInput" placeholder="Type your message...">
-      <button onclick="sendMessage()">Send</button>
+  <div class="chat-header">
+    <div class="chat-title">Chat Room</div>
+    <div class="chat-actions">
+      <span id="nicknameDisplay"></span>
+      <button type="button" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="chat-background">
+    <div class="chat-container">
+      <div id="messages" class="messages"></div>
+      <div class="input-container">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button type="button" onclick="sendMessage()">Send</button>
+      </div>
     </div>
   </div>
 

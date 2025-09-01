@@ -3,21 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Freechat Login</title>
+  <title>FreeChat Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="login-container">
-    <h1>Welcome to Freechat</h1>
-    <p>Enter your Nickname</p>
-    <input type="text" id="nickname" placeholder="Nickname">
-    <button onclick="enterChat()">Enter Chat</button>
+  <div class="login-background">
+    <div class="login-container">
+      <h1>Welcome to FreeChat!</h1>
+      <p>Enter your nickname to join the chat</p>
+      <input type="text" id="nickname" placeholder="Nickname">
+      <button type="button" onclick="enterChat()">Enter Chat</button>
+    </div>
   </div>
 
   <script>
     function enterChat() {
       const nickname = document.getElementById('nickname').value.trim();
-      if (!nickname) return alert('Enter nickname');
+      if (!nickname) {
+        alert('Please enter a nickname!');
+        return;
+      }
       localStorage.setItem('nickname', nickname);
       window.location.href = 'chat.html';
     }
